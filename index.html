@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Retro Sci-Fi Website</title>
+    <style>
+        body {
+            background-color: #000000; /* Black background */
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            color: #00FF00; /* Neon green text color */
+            text-align: center;
+        }
+        header {
+            background-color: #4B0082; /* Indigo header */
+            padding: 20px;
+            border: 3px solid #00FFFF; /* Cyan border */
+            color: #FFFFFF; /* White text color for header */
+        }
+        nav {
+            margin: 20px 0;
+        }
+        nav a {
+            color: #FF00FF; /* Neon magenta link color */
+            font-size: 18px;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            padding: 20px;
+            border: 2px dashed #FF4500; /* Neon orange dashed border */
+            background-color: #1C1C1C; /* Very dark gray background */
+            color: #00FFFF; /* Cyan text color */
+        }
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #00008B; /* Dark blue footer */
+            border-top: 2px solid #FF00FF; /* Neon magenta top border */
+            color: #FFFFFF; /* White text color for footer */
+        }
+        .marquee {
+            color: #00FF00; /* Neon green marquee text */
+            font-size: 24px;
+        }
+        img {
+            border: 2px solid #00FFFF; /* Cyan border around images */
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>WELCOME TO THE COSMIC CANTINA</h1>
+    </header>
+    
+    <marquee class="marquee" behavior="scroll" direction="left" id="quoteMarquee" scrollamount="10">
+        <!-- Quote will be inserted here -->
+    </marquee>
+    
+    <script>
+        // Array of quotes
+        const quotes = [
+            "The only way to discover the limits of the possible is to go beyond them into the impossible. - Arthur C. Clarke",
+            "Imagination is more important than knowledge. - Albert Einstein",
+            "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+            "The only real valuable thing is intuition. - Albert Einstein",
+            "Science fiction is any idea that occurs in the head and doesn't exist yet, but soon will, and will change everything for everybody, and nothing will ever be the same again. - Ray Bradbury",
+			"The future is already here — it's just not very evenly distributed. – William Gibson",
+			"The only way to discover the limits of the possible is to go beyond them into the impossible. – Arthur C. Clarke",
+			"In the beginning the Universe was created. This has made a lot of people very angry and been widely regarded as a bad move. – Douglas Adams",
+			"A single dream is more powerful than a thousand realities. – J.R.R. Tolkien",
+			"It is sometimes an appropriate response to reality to go insane. – Philip K. Dick",
+			"When you eliminate the impossible, whatever remains, however improbable, must be the truth. – Arthur Conan Doyle",
+			"The needs of the many outweigh the needs of the few. – Spock",
+			"The mind that opens to a new idea never returns to its original size. – Albert Einstein",
+			"To boldly go where no man has gone before.-Capt. Kirk",
+			"Wake up, Neo..."
+        ];
+
+        // Function to get a random quote
+        function getRandomQuote() {
+            return quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        // Function to set a random quote in the marquee
+        function setRandomQuote() {
+            const quoteMarquee = document.getElementById('quoteMarquee');
+            quoteMarquee.textContent = getRandomQuote();
+        }
+
+        // Set a random quote initially
+        setRandomQuote();
+
+        // Listen for the 'finish' event to change the quote
+        const quoteMarquee = document.getElementById('quoteMarquee');
+        quoteMarquee.addEventListener('finish', () => {
+            setRandomQuote();
+            quoteMarquee.start();
+        });
+
+        // Trigger the 'finish' event manually since 'marquee' element doesn't natively support 'finish' event
+        quoteMarquee.addEventListener('scrollamount', () => {
+            setTimeout(() => {
+                const clonedMarquee = quoteMarquee.cloneNode(true);
+                quoteMarquee.parentNode.replaceChild(clonedMarquee, quoteMarquee);
+                clonedMarquee.addEventListener('scrollamount', () => clonedMarquee.dispatchEvent(new Event('finish')));
+            }, 10000); // Change this value to match the duration of the scroll
+        });
+    </script>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="NIST 2.0/NIST_Homepage.html">NIST 2.0</a>
+        <a href="#VirtualBoy">Virtual Boy</a>
+        <a href="#Anaglyph3D">Anaglyph 3D</a>
+    </nav>
+
+    <div class="content">
+        <h2>How did you get here?</h2>
+        <p>Well, regardless... Now that you're here, you might as well have a look around. I am currently working on a Cybersecurity lab, Virtual Boy museum, and Anaglyph 3D art studio. </p>
+        <div style="width:480px; margin: 0 auto;">
+            <iframe allow="fullscreen" frameBorder="0" height="320" src="https://giphy.com/embed/u2wg2uXJbHzkXkPphr/video" width="480"></iframe>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Stegosoft | Designed by Adam</p>
+        <p>Email: <a href="locust.kapok1294@eagereverest.com">locust.kapok1294@eagereverest.com</a></p>
+		<!-- hitwebcounter Code START -->
+		<a href="https://www.hitwebcounter.com" target="_blank">
+		<img src="https://hitwebcounter.com/counter/counter.php?page=14683975&style=0010&nbdigits=5&type=page&initCount=0" title="Counter Widget" Alt="Visit counter For Websites"   border="0" /></a>      
+    </footer>
+</body>
+</html>
