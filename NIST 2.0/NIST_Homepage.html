@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIST 2.0 Framework</title>
+    <style>
+        body {
+            background-color: #000000; /* Black background */
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            color: #00FF00; /* Neon green text color */
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4B0082; /* Indigo header */
+            padding: 20px;
+            border: 3px solid #00FFFF; /* Cyan border */
+            color: #FFFFFF; /* White text color for header */
+            margin-bottom: 20px;
+        }
+        nav {
+            margin: 20px 0;
+        }
+        nav a {
+            color: #FF00FF; /* Neon magenta link color */
+            font-size: 18px;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            padding: 20px;
+            border: 2px dashed #FF4500; /* Neon orange dashed border */
+            background-color: #1C1C1C; /* Very dark gray background */
+            color: #00FFFF; /* Cyan text color */
+        }
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #00008B; /* Dark blue footer */
+            border-top: 2px solid #FF00FF; /* Neon magenta top border */
+            color: #FFFFFF; /* White text color for footer */
+        }
+        .marquee {
+            color: #00FF00; /* Neon green marquee text */
+            font-size: 24px;
+        }
+        img {
+            border: 2px solid #00FFFF; /* Cyan border around images */
+            margin-top: 10px;
+            width: 20%; /* Adjust width as needed */
+            height: auto; /* Maintain aspect ratio */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .left-align {
+            text-align: left;
+            display: inline-block;
+            width: auto;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li::before {
+            content: "•"; /* Bullet point */
+            color: #00FFFF; /* Same color as the text */
+            margin-right: 5px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4B0082;
+            color: #FFFFFF;
+            border: 2px solid #00FFFF;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #6A0DAD;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NIST 2.0 Cybersecurity Framework</h1>
+    </header>
+    
+    <marquee class="marquee" behavior="scroll" direction="left" id="quoteMarquee">
+        Welcome to the NIST 2.0 Cybersecurity Framework page! Learn about the framework and explore its functions.
+    </marquee>
+    
+    <script>
+        // Array of quotes
+        const quotes = [
+            "The only way to discover the limits of the possible is to go beyond them into the impossible. - Arthur C. Clarke",
+            "Imagination is more important than knowledge. - Albert Einstein",
+            "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+            "The only real valuable thing is intuition. - Albert Einstein",
+            "Science fiction is any idea that occurs in the head and doesn't exist yet, but soon will, and will change everything for everybody, and nothing will ever be the same again. - Ray Bradbury",
+			"The future is already here — it's just not very evenly distributed. – William Gibson",
+			"The only way to discover the limits of the possible is to go beyond them into the impossible. – Arthur C. Clarke",
+			"In the beginning the Universe was created. This has made a lot of people very angry and been widely regarded as a bad move. – Douglas Adams",
+			"A single dream is more powerful than a thousand realities. – J.R.R. Tolkien",
+			"It is sometimes an appropriate response to reality to go insane. – Philip K. Dick",
+			"When you eliminate the impossible, whatever remains, however improbable, must be the truth. – Arthur Conan Doyle",
+			"The needs of the many outweigh the needs of the few. – Spock",
+			"The mind that opens to a new idea never returns to its original size. – Albert Einstein",
+			"To boldly go where no man has gone before.-Capt. Kirk",
+			"Wake up, Neo..."
+        ];
+
+        // Function to get a random quote
+        function getRandomQuote() {
+            return quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        // Function to set a random quote in the marquee
+        function setRandomQuote() {
+            const quoteMarquee = document.getElementById('quoteMarquee');
+            quoteMarquee.textContent = getRandomQuote();
+        }
+
+        // Set a random quote initially
+        setRandomQuote();
+
+        // Change the quote when the marquee scrolls off-screen
+        const quoteMarquee = document.getElementById('quoteMarquee');
+        quoteMarquee.addEventListener('finish', () => {
+            setRandomQuote();
+            quoteMarquee.start();
+        });
+
+        // Trigger the 'finish' event manually
+        setInterval(() => {
+            const clonedMarquee = quoteMarquee.cloneNode(true);
+            quoteMarquee.parentNode.replaceChild(clonedMarquee, quoteMarquee);
+            clonedMarquee.addEventListener('finish', () => clonedMarquee.dispatchEvent(new Event('finish')));
+        }, 30000); // Change this value to match the duration of the scroll
+    </script>
+
+    <nav>
+        <a href="C:\Users\adam.prine\Desktop\Retro_Website\index.html">Home</a>
+        <a href="govern.html">Govern</a>
+        <a href="identify.html">Identify</a>
+        <a href="protect.html">Protect</a>
+        <a href="detect.html">Detect</a>
+        <a href="respond.html">Respond</a>
+        <a href="recover.html">Recover</a>
+    </nav>
+
+    <div class="content">
+        <div class="section-title">What is the NIST 2.0 Cybersecurity Framework?</div>
+        <img src="assets/NIST_Framework2.0.png" alt="NIST Cybersecurity Framework 2.0">
+        <div class="left-align">
+            <p>The NIST Cybersecurity Framework 2.0 is a set of industry standards and best practices to help organizations manage cybersecurity risks. It is composed of five key functions:</p>
+            <ul>
+                <li><strong>Govern:</strong> Establish oversight and accountability to manage cybersecurity risks.</li>
+                <li><strong>Identify:</strong> Develop an understanding of the cybersecurity risks to systems, assets, data, and capabilities.</li>
+                <li><strong>Protect:</strong> Develop and implement appropriate safeguards to ensure the delivery of critical infrastructure services.</li>
+                <li><strong>Detect:</strong> Develop and implement appropriate activities to identify the occurrence of a cybersecurity event.</li>
+                <li><strong>Respond:</strong> Develop and implement appropriate activities to take action regarding a detected cybersecurity incident.</li>
+                <li><strong>Recover:</strong> Develop and implement appropriate activities to maintain plans for resilience and to restore any capabilities or services that were impaired due to a cybersecurity incident.</li>
+            </ul>
+            <p>Each of these functions plays a crucial role in helping organizations to prepare for, respond to, and recover from cybersecurity threats.</p>
+            <div class="button-container">
+                <a href="govern.html" class="button">Begin Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+		<p>© 2024 Stegosoft | Designed by Adam</p>
+        <p>Email: <a href="locust.kapok1294@eagereverest.com">locust.kapok1294@eagereverest.com</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Govern</title>
+    <style>
+        body {
+            background-color: #000000; /* Black background */
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            color: #00FF00; /* Neon green text color */
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure full height */
+        }
+        header {
+            background-color: #4B0082; /* Indigo header */
+            padding: 20px;
+            border-bottom: 3px solid #00FFFF; /* Cyan border */
+            color: #FFFFFF; /* White text color for header */
+        }
+        nav {
+            margin-bottom: 20px;
+        }
+        nav a {
+            color: #FF00FF; /* Neon magenta link color */
+            font-size: 18px;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            flex: 1; /* Take remaining space */
+            padding: 20px;
+            background-color: #1C1C1C; /* Very dark gray background */
+            color: #00FFFF; /* Cyan text color */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 60px; /* Additional padding to avoid footer overlap */
+        }
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .question {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 800px; /* Optional: max width to keep it from stretching too far */
+            justify-content: space-between; /* Space between text and lever */
+        }
+        .question-text {
+            font-size: 20px;
+            text-align: left;
+            margin-right: 10px;
+            flex: 1; /* Ensure it takes up available space */
+            box-sizing: border-box;
+        }
+        .lever-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lever {
+            width: 60px;
+            height: 30px;
+            background-color: #696969; /* Dim gray lever */
+            border: 2px solid #00FFFF; /* Cyan border */
+            border-radius: 15px;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        .lever::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 2px;
+            width: 26px;
+            height: 26px;
+            background-color: #00FF00; /* Neon green knob */
+            border-radius: 50%;
+            transition: left 0.3s;
+            transform: translateY(-50%);
+        }
+        input[type="checkbox"] {
+            display: none;
+        }
+        input[type="checkbox"]:checked + .lever {
+            background-color: #00FF00; /* Neon green when checked */
+        }
+        input[type="checkbox"]:checked + .lever::after {
+            left: calc(100% - 28px);
+        }
+        footer {
+            background-color: #1C1C1C;
+            color: #00FFFF;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        .results {
+            margin-top: 20px;
+            display: none; /* Hidden by default */
+            text-align: left;
+            color: #FF0000; /* Red color for incorrect answers */
+        }
+        .show-results {
+            display: block; /* Show results when the quiz is submitted */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4B0082;
+            color: #FFFFFF;
+            border: 2px solid #00FFFF;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #6A0DAD;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Security Questions</h1>
+    </header>
+
+    <nav>
+        <a href="NIST_Homepage.html">Back to NIST Hub</a>
+    </nav>
+
+    <div class="content">
+        <div class="section-title">Govern (GV)</div>
+        <img src="assets/Govern.png" alt="Govern Image" class="centered-image">
+        <div class="question">
+            <div class="question-text">GV.OC-01: The organizational mission is understood and informs cybersecurity risk management</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.OC-02: Internal and external stakeholders are understood, and their needs and expectations regarding cybersecurity risk management are understood and considered</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+        <div class="question">
+            <div class="question-text">GV.OC-03: Legal, regulatory, and contractual requirements regarding cybersecurity — including privacy and civil liberties obligations — are understood and managed</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.OC-04: Critical objectives, capabilities, and services that external stakeholders depend on or expect from the organization are understood and communicated</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.OC-05: Outcomes, capabilities, and services that the organization depends on are understood and communicated</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.RM-01: Risk management objectives are established and agreed to by organizational stakeholders</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.RM-02: Risk appetite and risk tolerance statements are established, communicated, and maintained</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.RM-03: Cybersecurity risk management activities and outcomes are included in enterprise risk management processes</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.RM-04: Strategic direction that describes appropriate risk response options is established and communicated</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.RM-05: Lines of communication across the organization are established for cybersecurity risks, including risks from suppliers and other third parties</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.RM-06: A standardized method for calculating, documenting, categorizing, and prioritizing cybersecurity risks is established and communicated</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.RM-07: Strategic opportunities (i.e., positive risks) are characterized and are included in organizational cybersecurity risk discussions</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.RR-01: Organizational leadership is responsible and accountable for cybersecurity risk and fosters a culture that is risk-aware, ethical, and continually improving</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.RR-02: Roles, responsibilities, and authorities related to cybersecurity risk management are established, communicated, understood, and enforced</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.RR-03: Adequate resources are allocated commensurate with the cybersecurity risk strategy, roles, responsibilities, and policies</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.RR-04: Cybersecurity is included in human resources practices</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.PO-01: Policy for managing cybersecurity risks is established based on organizational context, cybersecurity strategy, and priorities and is communicated and enforced</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.PO-02: Policy for managing cybersecurity risks is reviewed, updated, communicated, and enforced to reflect changes in requirements, threats, technology, and organizational mission</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.OV-01: Cybersecurity risk management strategy outcomes are reviewed to inform and adjust strategy and direction</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.OV-02: The cybersecurity risk management strategy is reviewed and adjusted to ensure coverage of organizational requirements and risks</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.OV-03: Organizational cybersecurity risk management performance is evaluated and reviewed for adjustments needed</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.SC-01: A cybersecurity supply chain risk management program, strategy, objectives, policies, and processes are established and agreed to by organizational stakeholders</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.SC-02: Cybersecurity roles and responsibilities for suppliers, customers, and partners are established, communicated, and coordinated internally and externally</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.SC-03: Cybersecurity supply chain risk management is integrated into cybersecurity and enterprise risk management, risk assessment, and improvement processes</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.SC-04: Suppliers are known and prioritized by criticality</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.SC-05: Requirements to address cybersecurity risks in supply chains are established, prioritized, and integrated into contracts and other types of agreements with suppliers and other relevant third parties</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.SC-06: Planning and due diligence are performed to reduce risks before entering into formal supplier or other third-party relationships</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.SC-07: The risks posed by a supplier, their products and services, and other third parties are understood, recorded, prioritized, assessed, responded to, and monitored over the course of the relationship</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.SC-08: Relevant suppliers and other third parties are included in incident planning, response, and recovery activities</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.SC-09: Supply chain security practices are integrated into cybersecurity and enterprise risk management programs, and their performance is monitored throughout the technology product and service life cycle</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="question">
+            <div class="question-text">GV.SC-10: Cybersecurity supply chain risk management plans include provisions for activities that occur after the conclusion of a partnership or service agreement</div>
+            <label class="lever-container">
+                <input type="checkbox" class="question-checkbox">
+                <div class="lever"></div>
+            </label>
+        </div>
+
+        <div class="button-container">
+            <button class="button" onclick="submitResults()">Submit</button>
+            <a href="Identify.html" class="button">Go to Identify</a>
+            <button class="button" onclick="exportResults()">Export Results</button>
+        </div>
+        
+        <div id="results" class="results">
+            <h3>Results:</h3>
+            <p id="score"></p>
+            <ul id="incorrectAnswers"></ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>Total Yes Count: <span id="totalYesCount">0</span></p>
+        <button class="clear-data-button" onclick="clearData()">Clear Data</button>
+        <p>Score: <span id="yesCount">0</span>/<span id="totalCount">0</span> (<span id="percentage">0</span>%)</p>    
+        <p>© 2024 My Retro Sci-Fi Website | Designed by Me</p>
+        <p>Email: <a href="mailto:locust.kapok1294@eagereverest.com">locust.kapok1294@eagereverest.com</a></p>
+    </footer>
+
+    <script>
+        // Function to update yes count and store incorrect answers in localStorage
+        function updateYesCount() {
+            const checkboxes = document.querySelectorAll('.question-checkbox');
+            const yesCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+            const totalCount = checkboxes.length;
+            const incorrectAnswers = Array.from(checkboxes).map((checkbox, index) => {
+                return checkbox.checked ? null : document.querySelectorAll('.question-text')[index].textContent;
+            }).filter(answer => answer !== null);
+
+            console.log("yesCount:", yesCount);
+            console.log("totalCount:", totalCount);
+
+            // Store current page results
+            localStorage.setItem('yesCount', yesCount);
+            localStorage.setItem('totalCount', totalCount);
+            localStorage.setItem('incorrectAnswers', JSON.stringify(incorrectAnswers));
+        }
+
+        // Update cumulative counts and incorrect answers only once on page load
+        function updateCumulativeResults() {
+            const yesCount = parseInt(localStorage.getItem('yesCount')) || 0;
+            const totalCount = parseInt(localStorage.getItem('totalCount')) || 0;
+            const incorrectAnswers = JSON.parse(localStorage.getItem('incorrectAnswers')) || [];
+
+            console.log("Retrieved yesCount:", yesCount);
+            console.log("Retrieved totalCount:", totalCount);
+            console.log("Retrieved incorrectAnswers:", incorrectAnswers);
+
+            const cumulativeYesCount = parseInt(localStorage.getItem('cumulativeYesCount')) || 0;
+            const cumulativeTotalCount = parseInt(localStorage.getItem('cumulativeTotalCount')) || 0;
+            const cumulativeIncorrectAnswers = JSON.parse(localStorage.getItem('cumulativeIncorrectAnswers')) || [];
+
+            console.log("Current cumulativeYesCount:", cumulativeYesCount);
+            console.log("Current cumulativeTotalCount:", cumulativeTotalCount);
+            console.log("Current cumulativeIncorrectAnswers:", cumulativeIncorrectAnswers);
+
+            // Update cumulative counts and incorrect answers
+            const newCumulativeYesCount = cumulativeYesCount + yesCount;
+            localStorage.setItem('cumulativeYesCount', newCumulativeYesCount);
+            localStorage.setItem('cumulativeTotalCount', cumulativeTotalCount + totalCount);
+            localStorage.setItem('cumulativeIncorrectAnswers', JSON.stringify(cumulativeIncorrectAnswers.concat(incorrectAnswers)));
+
+            console.log("Updated cumulativeYesCount:", newCumulativeYesCount);
+            console.log("Updated cumulativeTotalCount:", cumulativeTotalCount + totalCount);
+            console.log("Updated cumulativeIncorrectAnswers:", JSON.stringify(cumulativeIncorrectAnswers.concat(incorrectAnswers)));
+        }
+
+        // Function to submit results
+        function submitResults() {
+            updateYesCount();
+            updateCumulativeResults();
+            showResults();
+        }
+
+        // Function to display results
+        function showResults() {
+            const checkboxes = document.querySelectorAll('.question-checkbox');
+            const totalCount = checkboxes.length;
+            const yesCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+            const incorrectAnswers = Array.from(checkboxes).map((checkbox, index) => {
+                return checkbox.checked ? null : document.querySelectorAll('.question-text')[index].textContent;
+            }).filter(answer => answer !== null);
+            const percentage = ((yesCount / totalCount) * 100).toFixed(2);
+
+            document.getElementById('yesCount').textContent = yesCount;
+            document.getElementById('totalCount').textContent = totalCount;
+            document.getElementById('percentage').textContent = percentage;
+
+            document.getElementById('score').textContent = `You scored ${yesCount} out of ${totalCount} (${percentage}%)`;
+            const incorrectList = document.getElementById('incorrectAnswers');
+            incorrectList.innerHTML = '';
+            incorrectAnswers.forEach(answer => {
+                const li = document.createElement('li');
+                li.textContent = answer;
+                incorrectList.appendChild(li);
+            });
+
+            document.getElementById('results').classList.add('show-results');
+        }
+
+        // Function to clear data
+        function clearData() {
+            localStorage.clear();
+            document.getElementById('totalYesCount').textContent = '0';
+        }
+
+        // Function to export results
+        function exportResults() {
+            const yesCount = localStorage.getItem('yesCount') || 0;
+            const totalCount = localStorage.getItem('totalCount') || 0;
+            const incorrectAnswers = JSON.parse(localStorage.getItem('incorrectAnswers')) || [];
+            const percentage = totalCount > 0 ? (yesCount / totalCount * 100).toFixed(2) : 0;
+            
+            let resultText = `Govern Page Results:\n\nTotal Yes Count: ${yesCount}/${totalCount}\nPercentage: ${percentage}%\n\nIncorrect Answers:\n`;
+            incorrectAnswers.forEach(answer => {
+                resultText += `- ${answer}\n`;
+            });
+
+            const blob = new Blob([resultText], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Govern_Results.txt';
+            link.click();
+        }
+
+        document.querySelectorAll('.question-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', updateYesCount);
+        });
+
+        // Initial call to set the total count on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateYesCount();
+            document.getElementById('totalYesCount').textContent = localStorage.getItem('totalYesCount') || 0;
+        });
+    </script>
+</body>
+</html>

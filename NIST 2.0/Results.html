@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <style>
+        body {
+            background-color: #000000; /* Black background */
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            color: #00FF00; /* Neon green text color */
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure full height */
+        }
+        header {
+            background-color: #4B0082; /* Indigo header */
+            padding: 20px;
+            border-bottom: 3px solid #00FFFF; /* Cyan border */
+            color: #FFFFFF; /* White text color for header */
+        }
+        .content {
+            flex: 1; /* Take remaining space */
+            padding: 20px;
+            border: 2px dashed #FF4500; /* Neon orange dashed border */
+            background-color: #1C1C1C; /* Very dark gray background */
+            color: #00FFFF; /* Cyan text color */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .results {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .incorrect-answers {
+            font-size: 18px;
+            color: #FF0000; /* Red color for incorrect answers */
+            margin-top: 20px;
+            text-align: left;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4B0082;
+            color: #FFFFFF;
+            border: 2px solid #00FFFF;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            margin: 10px;
+        }
+        .button:hover {
+            background-color: #6A0DAD;
+        }
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #00008B; /* Dark blue footer */
+            border-top: 2px solid #FF00FF; /* Neon magenta top border */
+            color: #FFFFFF; /* White text color for footer */
+            text-align: center;
+        }
+        .clear-data-button {
+            margin-top: 10px;
+            background-color: #FF00FF; /* Neon magenta background */
+            color: #FFFFFF; /* White text color */
+            font-size: 14px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .clear-data-button:hover {
+            background-color: #FF69B4; /* Light neon magenta on hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Results</h1>
+    </header>
+
+    <div class="content">
+        <div class="section-title">Your Score</div>
+        <div class="results">
+            <p>Total Yes Count: <span id="cumulativeYesCount">0</span>/<span id="cumulativeTotalCount">0</span></p>
+            <p>Percentage: <span id="cumulativePercentage">0%</span></p>
+        </div>
+        <div class="section-title">Incorrect Answers</div>
+        <div class="incorrect-answers">
+            <ul id="cumulativeIncorrectAnswersList"></ul>
+        </div>
+        <div class="button-container">
+            <button class="button" onclick="startOver()">Start Over</button>
+            <button class="button" onclick="goToNISTHome()">NIST Home</button>
+            <button class="button" onclick="exportResults()">Export Results</button>
+        </div>
+    </div>
+
+    <footer>
+        <button class="clear-data-button" onclick="clearData()">Clear Data</button>
+        <p>© 2024 Stegosoft | Designed by Adam</p>
+        <p>Email: <a href="mailto:locust.kapok1294@eagereverest.com">locust.kapok1294@eagereverest.com</a></p>
+    </footer>
+
+    <script>
+        function displayResults() {
+            const cumulativeYesCount = parseInt(localStorage.getItem('cumulativeYesCount')) || 0;
+            const cumulativeTotalCount = parseInt(localStorage.getItem('cumulativeTotalCount')) || 0;
+            const cumulativePercentage = cumulativeTotalCount > 0 ? (cumulativeYesCount / cumulativeTotalCount * 100).toFixed(2) : 0;
+
+            document.getElementById('cumulativeYesCount').textContent = cumulativeYesCount;
+            document.getElementById('cumulativeTotalCount').textContent = cumulativeTotalCount;
+            document.getElementById('cumulativePercentage').textContent = `${cumulativePercentage}%`;
+        }
+
+        function displayIncorrectAnswers() {
+            const cumulativeIncorrectAnswers = JSON.parse(localStorage.getItem('cumulativeIncorrectAnswers')) || [];
+            const cumulativeIncorrectAnswersList = document.getElementById('cumulativeIncorrectAnswersList');
+
+            cumulativeIncorrectAnswersList.innerHTML = '';
+            cumulativeIncorrectAnswers.forEach(answer => {
+                const li = document.createElement('li');
+                li.textContent = answer;
+                cumulativeIncorrectAnswersList.appendChild(li);
+            });
+        }
+
+        function clearData() {
+            localStorage.clear();
+            document.getElementById('cumulativeYesCount').textContent = '0';
+            document.getElementById('cumulativeTotalCount').textContent = '0';
+            document.getElementById('cumulativePercentage').textContent = '0%';
+            document.getElementById('cumulativeIncorrectAnswersList').innerHTML = '';
+        }
+
+        function startOver() {
+            window.location.href = 'govern.html';
+        }
+
+        function goToNISTHome() {
+            window.location.href = 'NIST_Homepage.html';
+        }
+
+        function exportResults() {
+            const cumulativeYesCount = localStorage.getItem('cumulativeYesCount') || 0;
+            const cumulativeTotalCount = localStorage.getItem('cumulativeTotalCount') || 0;
+            const cumulativePercentage = cumulativeTotalCount > 0 ? (cumulativeYesCount / cumulativeTotalCount * 100).toFixed(2) : 0;
+            const cumulativeIncorrectAnswers = JSON.parse(localStorage.getItem('cumulativeIncorrectAnswers')) || [];
+
+            let resultsText = `Total Yes Count: ${cumulativeYesCount}/${cumulativeTotalCount}\n`;
+            resultsText += `Percentage: ${cumulativePercentage}%\n`;
+            resultsText += `Incorrect Answers:\n`;
+            cumulativeIncorrectAnswers.forEach(answer => {
+                resultsText += `- ${answer}\n`;
+            });
+
+            const blob = new Blob([resultsText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'results.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayResults();
+            displayIncorrectAnswers();
+        });
+    </script>
+</body>
+</html>
